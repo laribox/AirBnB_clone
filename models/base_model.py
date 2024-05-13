@@ -3,6 +3,7 @@
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     """
     This is a base model class for our program.
