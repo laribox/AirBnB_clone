@@ -4,12 +4,12 @@ import uuid
 from datetime import datetime
 
 class BaseModel:
-     """
+    """
     This is a base model class for our program.
     defines all common attributes/methods for other classes.
     """
     def __init__(self):
-         """
+        """
         Constructor method for BaseModel.
         Initializes a new instance of BaseModel with the given name.
         """
