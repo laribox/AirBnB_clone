@@ -2,6 +2,7 @@
 
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -16,18 +17,19 @@ class BaseModel:
         """
         if kwargs is not None and kwargs:
             for arg in kwargs:
-                if key == "created_at":
+                if arg == "created_at":
                     self.__dict__["created_at"] = datetime.strptime(
                         kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                elif key == "updated_at":
+                elif arg == "updated_at":
                     self.__dict__["updated_at"] = datetime.strptime(
                         kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
                 else:
-                    self.__dict__[key] = kwargs[key]
+                    self.__dict__[arg] = kwargs[arg]
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()  # Assign current datetime
             self.updated_at = datetime.now()  # Assign current datetime
+            storage.new(self)
 
     def __str__(self):
         """Returns a string representation of an object"""
@@ -36,6 +38,7 @@ class BaseModel:
     def save(self):
         """Updates time by saving new current time"""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """Returns data in the dictionary"""
