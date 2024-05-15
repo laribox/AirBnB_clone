@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Creating class user that inherits from BaseModel class"""
-from models.basemodel import BaseModel
+from models.base_model import BaseModel
+
 
 class User(BaseModel):
     """
@@ -10,4 +11,3 @@ class User(BaseModel):
     password = ''
     first_name = ''
     last_name = ''
-

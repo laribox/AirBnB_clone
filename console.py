@@ -12,7 +12,9 @@ def parse(args):
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    __classes = {"BaseModel", "User"}
+    __classes = {"BaseModel", "User",
+                 "City", "Place", "State",
+                 "Review", "Amenity"}
 
     def do_quit(self, line):
         "Quits console"
@@ -27,9 +29,10 @@ class HBNBCommand(cmd.Cmd):
         if len(line) == 0:
             print("** class name missing **")
         elif line in self.__classes:
-            newbase = BaseModel()
-            print(newbase.id)
-            newbase.save()
+            classes = storage.classes()
+            obj = classes[line]()
+            print(obj.id)
+            obj.save()
         else:
             print("** class doesn't exist **")
 
@@ -81,14 +84,14 @@ class HBNBCommand(cmd.Cmd):
         args = parse(line)
         objects = storage.all()
 
-        if len(args) > 1 and args[0] not in self.__classes:
+        if len(args) == 1 and args[0] not in self.__classes:
             print("** class doesn't exist **")
         else:
             list_objects = []
             for obj in objects.values():
                 if len(args) > 0 and args[0] == obj.__class__.__name__:
                     list_objects.append(obj.__str__())
-                else:
+                elif len(args) == 0:
                     list_objects.append(obj.__str__())
             print(list_objects)
 
@@ -98,8 +101,6 @@ class HBNBCommand(cmd.Cmd):
         the class name and id
         """
         args = parse(line)
-        attribute = args[2]
-        value = args[3].replace('"', "")
         objects = storage.all()
 
         if len(line) == 0:
@@ -116,13 +117,15 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
 
         if len(args) == 4:
+            attribute = args[2]
+            value = args[3].replace('"', "")
             obj = objects["{}.{}".format(args[0], args[1])]
             if attribute in obj.to_dict().keys():
                 cast = type(getattr(obj, attribute))
                 setattr(obj, attribute, cast(value))
             else:
                 setattr(obj, attribute, value)
-                
+
         storage.save()
 
 
