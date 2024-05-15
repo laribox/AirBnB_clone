@@ -12,7 +12,7 @@ def parse(args):
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    __classes = {"BaseModel"}
+    __classes = {"BaseModel", "User"}
 
     def do_quit(self, line):
         "Quits console"
@@ -59,9 +59,8 @@ class HBNBCommand(cmd.Cmd):
         the class name and id
         """
         args = parse(line)
-
         objects = storage.all()
-        
+
         if len(line) == 0:
             print("** class name missing **")
         elif args[0] not in self.__classes:
@@ -74,17 +73,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
-
-
     def do_all(self, line):
         """
-        Prints a list of strings of all 
+        Prints a list of strings of all
         class instances
         """
         args = parse(line)
-
         objects = storage.all()
-        
+
         if len(args) > 1 and args[0] not in self.__classes:
             print("** class doesn't exist **")
         else:
@@ -96,10 +92,38 @@ class HBNBCommand(cmd.Cmd):
                     list_objects.append(obj.__str__())
             print(list_objects)
 
+    def do_update(self, line):
+        """
+        update a class instance using
+        the class name and id
+        """
+        args = parse(line)
+        attribute = args[2]
+        value = args[3].replace('"', "")
+        objects = storage.all()
 
+        if len(line) == 0:
+            print("** class name missing **")
+        elif args[0] not in self.__classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        elif f"{args[0]}.{args[1]}" not in objects:
+            print("** no instance found **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
 
-
-
+        if len(args) == 4:
+            obj = objects["{}.{}".format(args[0], args[1])]
+            if attribute in obj.to_dict().keys():
+                cast = type(getattr(obj, attribute))
+                setattr(obj, attribute, cast(value))
+            else:
+                setattr(obj, attribute, value)
+                
+        storage.save()
 
 
 if __name__ == '__main__':
