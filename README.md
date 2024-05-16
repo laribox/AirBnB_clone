@@ -1,4 +1,4 @@
-![AirBnB Clone Logo](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240513%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240513T081010Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=96ebe3b6bbddcecab9cc1df55c96fcb40a8670630daa58cf68d816a11e79b990)
+![AirBnB Clone Logo](https://www.aydentownsley.com/img/hbnb.png)
 
 # AirBnB Clone Project
 
