@@ -3,11 +3,45 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+import re
+import json
+from shlex import split
 
 
 def parse(args):
-    list = args.split()
+    """split a string into a list"""
+    list = split(args)
     return list
+
+
+def extract_info(string):
+    """ 
+    Regular expression pattern to match 
+    the class, method, and arguments
+    """
+
+    pattern = r'(\w+)\.(\w+)\((.*?)\)'
+
+    match = re.match(pattern, string)
+
+    if match:
+        class_name = match.group(1)
+        method_name = match.group(2)
+        arguments_str = match.group(3)
+        if arguments_str:
+            match_dict = re.match(r'^\{.*\}$', arguments_str.strip())
+            print(match_dict)
+            if method_name == "update" and match_dict:
+                print("dict")
+            else:
+                arguments_list = arguments_str.split(",")
+                arguments = [arg.strip().replace('"',
+                                             '') for arg in arguments_list]
+        else:
+            arguments = []
+        return class_name, method_name, arguments
+    else:
+        return None
 
 
 class HBNBCommand(cmd.Cmd):
@@ -15,6 +49,36 @@ class HBNBCommand(cmd.Cmd):
     __classes = {"BaseModel", "User",
                  "City", "Place", "State",
                  "Review", "Amenity"}
+
+    def default(self, line):
+        class_name, method_name, arguments = extract_info(line)
+        if len(arguments) == 0:
+            self.onecmd("{} {}".format(method_name, class_name))
+        else:
+            if method_name == "update":
+                if len(arguments) == 3:
+                    self.onecmd("{} {} {} {} {}".format(method_name,
+                                                        class_name,
+                                                        arguments[0],
+                                                        arguments[1], arguments[2]))
+                elif len(arguments) == 2:
+                    try:
+                        potential_dict = json.loads(arguments[1])
+                        if isinstance(potential_dict, dict):
+                            for k, v in potential_dict.items():
+                                self.onecmd("{} {} {} {} {}".format(method_name,
+                                                                    class_name, arguments[0], k, v))
+                    except json.JSONDecodeError:
+                        self.onecmd("{} {} {} {}".format(method_name,
+                                                         class_name, arguments[0], arguments[1]))
+                elif len(arguments) == 1:
+                    self.onecmd("{} {} {}".format(method_name,
+                                                  class_name, arguments[0]))
+                    
+                 
+            else:
+                self.onecmd("{} {} {}".format(method_name,
+                                              class_name, arguments[0]))
 
     def do_quit(self, line):
         "Quits console"
@@ -35,6 +99,24 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
         else:
             print("** class doesn't exist **")
+
+    def do_count(self, line):
+        """
+        Print the count of the objects stored in JSON file
+        """
+        args = parse(line)
+        objects = storage.all()
+
+        if len(args) == 1 and args[0] not in self.__classes:
+            print("** class doesn't exist **")
+        else:
+            list_objects = []
+            for obj in objects.values():
+                if len(args) > 0 and args[0] == obj.__class__.__name__:
+                    list_objects.append(obj.__str__())
+                elif len(args) == 0:
+                    list_objects.append(obj.__str__())
+            print(len(list_objects))
 
     def do_show(self, line):
         """
@@ -118,7 +200,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(args) == 4:
             attribute = args[2]
-            value = args[3].replace('"', "")
+            value = args[3]
             obj = objects["{}.{}".format(args[0], args[1])]
             if attribute in obj.to_dict().keys():
                 cast = type(getattr(obj, attribute))
