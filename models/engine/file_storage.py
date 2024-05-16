@@ -7,8 +7,8 @@ import os
 class FileStorage:
     """ This class serializes instances to Json file"""
 
-    __file_path = "file.json"
-    __objects = {}
+    __file_path = "file.json" # File path for the json file
+    __objects = {} # Serialized objects or instances ready to be written into the JSON FILE
 
     def all(self):
         return self.__objects
