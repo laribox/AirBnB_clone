@@ -15,8 +15,8 @@ def parse(args):
 
 
 def extract_info(string):
-    """ 
-    Regular expression pattern to match 
+    """
+    Regular expression pattern to match
     the class, method, and arguments
     """
 
@@ -27,16 +27,11 @@ def extract_info(string):
     if match:
         class_name = match.group(1)
         method_name = match.group(2)
-        arguments_str = match.group(3)
+        arguments_str = match.group(3).strip()
         if arguments_str:
-            match_dict = re.match(r'^\{.*\}$', arguments_str.strip())
-            print(match_dict)
-            if method_name == "update" and match_dict:
-                print("dict")
-            else:
-                arguments_list = arguments_str.split(",")
-                arguments = [arg.strip().replace('"',
-                                             '') for arg in arguments_list]
+            arguments_list = re.split(r',\s*(?=[^\}]*(?:\{|$))', arguments_str)
+            arguments = [arg.strip().strip('"').strip("'")
+                         for arg in arguments_list]
         else:
             arguments = []
         return class_name, method_name, arguments
@@ -60,22 +55,32 @@ class HBNBCommand(cmd.Cmd):
                     self.onecmd("{} {} {} {} {}".format(method_name,
                                                         class_name,
                                                         arguments[0],
-                                                        arguments[1], arguments[2]))
+                                                        arguments[1],
+                                                        arguments[2]))
                 elif len(arguments) == 2:
                     try:
-                        potential_dict = json.loads(arguments[1])
+                        tmp = arguments[1].replace('\'', '"').replace("\\", "")
+                        print(tmp)
+                        potential_dict = json.loads(tmp)
                         if isinstance(potential_dict, dict):
+                            print("is dict instance")
                             for k, v in potential_dict.items():
-                                self.onecmd("{} {} {} {} {}".format(method_name,
-                                                                    class_name, arguments[0], k, v))
+                                self.onecmd("{} {} {} {} {}".format(
+                                    method_name,
+                                    class_name,
+                                    arguments[0],
+                                    k,
+                                    v
+                                ))
                     except json.JSONDecodeError:
                         self.onecmd("{} {} {} {}".format(method_name,
-                                                         class_name, arguments[0], arguments[1]))
+                                                         class_name,
+                                                         arguments[0],
+                                                         arguments[1]))
                 elif len(arguments) == 1:
                     self.onecmd("{} {} {}".format(method_name,
                                                   class_name, arguments[0]))
-                    
-                 
+
             else:
                 self.onecmd("{} {} {}".format(method_name,
                                               class_name, arguments[0]))
