@@ -97,6 +97,10 @@ class TestHBNBCommand(unittest.TestCase):
                 result = output.getvalue().strip()
                 key = item + "." + uid
                 self.assertEqual(str(storage.all()[key]), result)
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd(item + '.show("{}")'.format(uid))
+                result1 = output.getvalue().strip()
+                self.assertEqual(str(storage.all()[key]), result1)
 
     def test_destroy(self):
         for item in self.__list:
@@ -105,6 +109,12 @@ class TestHBNBCommand(unittest.TestCase):
                 uid = output.getvalue().strip()
                 HBNBCommand().onecmd("destroy " + item + " " + uid)
                 key = item + "." + uid
+                self.assertNotIn(key, storage.all().keys())
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd("create " + item)
+                uid = output.getvalue().strip()
+                key = item + "." + uid
+                HBNBCommand().onecmd(item + '.destroy("{}")'.format(uid))
                 self.assertNotIn(key, storage.all().keys())
 
     def test_all(self):
