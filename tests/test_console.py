@@ -2,9 +2,15 @@
 
 import unittest
 from console import HBNBCommand
-
+from unittest.mock import patch
+from io import StringIO
+from models import storage
+ 
 
 class TestHBNBCommand(unittest.TestCase):
+
+    __list = ["User", "City", "Place, BaseModel",
+              "State", "Amenity", "Review"]
 
     def test_costum_prompt(self):
         self.assertEqual("(hbnb) ", HBNBCommand.prompt)
@@ -19,6 +25,25 @@ class TestHBNBCommand(unittest.TestCase):
 
     def test_EOF_exits(self):
         self.assertTrue(HBNBCommand().onecmd("EOF"))
+
+    def test_help_quit(self):
+        txt = "Quits console"
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("help quit")
+            self.assertEqual(txt, output.getvalue().strip())
+
+    def test_help_EOF(self):
+        txt = "Exits console"
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("help EOF")
+            self.assertEqual(txt, output.getvalue().strip())
+
+    def test_help_create(self):
+        txt = ("Create a new instance of a class.\n        "
+               "Usage: create <class_name>")
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("help create")
+            self.assertEqual(txt, output.getvalue().strip()) 
 
     def test_create_missing_class(self):
         errorString = "** class name missing **"
@@ -39,28 +64,36 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn(Key, storage.all().keys())
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create User")
-            Key = f"BaseModel.{output.getvalue().strip()}"
+            Key = f"User.{output.getvalue().strip()}"
             self.assertIn(Key, storage.all().keys())
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create State")
-            Key = f"BaseModel.{output.getvalue().strip()}"
+            Key = f"State.{output.getvalue().strip()}"
             self.assertIn(Key, storage.all().keys())
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create City")
-            Key = f"BaseModel.{output.getvalue().strip()}"
+            Key = f"City.{output.getvalue().strip()}"
             self.assertIn(Key, storage.all().keys())
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create Amenity")
-            Key = f"BaseModel.{output.getvalue().strip()}"
+            Key = f"Amenity.{output.getvalue().strip()}"
             self.assertIn(Key, storage.all().keys())
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create Place")
-            Key = f"BaseModel.{output.getvalue().strip()}"
+            Key = f"Place.{output.getvalue().strip()}"
             self.assertIn(Key, storage.all().keys())
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create Review")
-            Key = f"BaseModel.{output.getvalue().strip()}"
+            Key = f"Review.{output.getvalue().strip()}"
             self.assertIn(Key, storage.all().keys())
+
+    def test_show(self):
+        for item in self.__list:
+            with patch ('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd("create " + item)
+                uid = output.getvalue().strip()
+                key = item + "." + uid
+                self.assertIn(key, storage.all().keys())
 
 
 if __name__ == "__main__":
