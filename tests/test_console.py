@@ -129,6 +129,18 @@ class TestHBNBCommand(unittest.TestCase):
                 key = item + "." + uid
                 self.assertEqual(storage.all()[key].name, "Bob")
 
+    def test_count(self):
+        for item in self.__list:
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd(item + ".count()")
+                count = output.getvalue().strip()
+                objects =[]
+                for obj in storage.all().values():
+                    if obj.__class__.__name__ == item:
+                        objects.append(obj)
+    
+            self.assertEqual(int(count), len(objects))
+
 
 if __name__ == "__main__":
     unittest.main()
