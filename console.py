@@ -204,16 +204,17 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
 
         if len(args) == 4:
-            attribute = args[2]
-            value = args[3]
-            obj = objects["{}.{}".format(args[0], args[1])]
-            if attribute in obj.to_dict().keys():
-                cast = type(getattr(obj, attribute))
-                setattr(obj, attribute, cast(value))
-            else:
-                setattr(obj, attribute, value)
+            if f"{args[0]}.{args[1]}" in objects:
+                attribute = args[2]
+                value = args[3]
+                obj = objects["{}.{}".format(args[0], args[1])]
+                if attribute in obj.to_dict().keys():
+                    cast = type(getattr(obj, attribute))
+                    setattr(obj, attribute, cast(value))
+                else:
+                    setattr(obj, attribute, value)
 
-        storage.save()
+                storage.save()
 
 
 if __name__ == '__main__':
