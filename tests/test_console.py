@@ -140,7 +140,7 @@ class TestHBNBCommand(unittest.TestCase):
                 self.assertEqual(storage.all()[key].name, "Bob")
             with patch('sys.stdout', new=StringIO()) as output:
                 HBNBCommand().onecmd(
-                    item + "update({}, 'name', 'Monalisa')".format(uid))
+                    item + 'update({}, "name", "Monalisa")'.format(uid))
                 key = item + "." + uid
                 self.assertEqual(storage.all()[key].name, "Monalisa")
 
