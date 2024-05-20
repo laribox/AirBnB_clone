@@ -107,6 +107,25 @@ class TestHBNBCommand(unittest.TestCase):
                 key = item + "." + uid
                 self.assertNotIn(key, storage.all().keys())
 
+    def test_all(self):
+        for item in self.__list:
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd("create " + item)
+                uid = output.getvalue().strip()
+                HBNBCommand().onecmd("all " + item)
+                self.assertIn(item, output.getvalue().strip())
+
+    def test_update(self):
+        for item in self.__list:
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd("create " + item)
+                uid = output.getvalue().strip()
+                HBNBCommand().onecmd("update " + item +
+                                     " " + uid + " name Bob")
+                self.assertTrue(len(output.getvalue().strip()) > 0)
+                key = item + "." + uid
+                self.assertEqual(storage.all()[key].name, "Bob")
+
 
 if __name__ == "__main__":
     unittest.main()
