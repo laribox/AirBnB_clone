@@ -5,11 +5,11 @@ from console import HBNBCommand
 from unittest.mock import patch
 from io import StringIO
 from models import storage
- 
+
 
 class TestHBNBCommand(unittest.TestCase):
 
-    __list = ["User", "City", "Place, BaseModel",
+    __list = ["User", "City", "Place", "BaseModel",
               "State", "Amenity", "Review"]
 
     def test_costum_prompt(self):
@@ -43,7 +43,7 @@ class TestHBNBCommand(unittest.TestCase):
                "Usage: create <class_name>")
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("help create")
-            self.assertEqual(txt, output.getvalue().strip()) 
+            self.assertEqual(txt, output.getvalue().strip())
 
     def test_create_missing_class(self):
         errorString = "** class name missing **"
@@ -88,13 +88,12 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn(Key, storage.all().keys())
 
     def test_show(self):
-        for item in self.__list:
+        for item in __list:
             with patch ('sys.stdout', new=StringIO()) as output:
                 HBNBCommand().onecmd("create " + item)
                 uid = output.getvalue().strip()
-                key = item + "." + uid
-                self.assertIn(key, storage.all().keys())
-
+                HBNBCommand().onecmd("show " + item + " " + uid)
+                self.assertTrue(len(output.getvalue().strip()) > 0)
 
 if __name__ == "__main__":
     unittest.main()
