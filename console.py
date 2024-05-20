@@ -98,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
         "Exits console"
         return True
 
-    def emptyline(self, line):
+    def emptyline(self):
         """Do nothing"""
         pass
 
