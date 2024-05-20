@@ -23,7 +23,7 @@ class BaseModel:
                 elif arg == "updated_at":
                     self.__dict__["updated_at"] = datetime.strptime(
                         kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                else:
+                elif arg != "__class__":
                     self.__dict__[arg] = kwargs[arg]
         else:
             self.id = str(uuid.uuid4())
