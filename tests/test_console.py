@@ -57,7 +57,7 @@ class TestHBNBCommand(unittest.TestCase):
             HBNBCommand().onecmd("create MyModel")
             self.assertEqual(errorString, output.getvalue().strip())
 
-    def test_create_object(self):
+    def test_create(self):
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create BaseModel")
             Key = f"BaseModel.{output.getvalue().strip()}"
