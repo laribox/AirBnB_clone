@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""This module is for constrolling the console"""
 
 import cmd
 from models.base_model import BaseModel
@@ -40,6 +41,10 @@ def extract_info(string):
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    Class to intercept the console cmd
+    and execute our code
+    """
     prompt = '(hbnb) '
     __classes = {"BaseModel", "User",
                  "City", "Place", "State",
