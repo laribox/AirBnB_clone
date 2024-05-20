@@ -33,7 +33,7 @@ class TestPlace(unittest.TestCase):
         self.assertTrue(hasattr(obj, "price_by_night"))
         self.assertTrue(hasattr(obj, "latitude"))
         self.assertTrue(hasattr(obj, "longitude"))
-        self.assertTrue(hasattr(obj, "amenity_ids")) 
+        self.assertTrue(hasattr(obj, "amenity_ids"))
 
     def test_create_instance_with_None_args(self):
         with self.assertRaises(TypeError):
@@ -44,7 +44,6 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(str, type(obj.id))
         self.assertEqual(datetime, type(obj.created_at))
         self.assertEqual(datetime, type(obj.updated_at))
-        
 
     def test_string_representation(self):
         obj = Place()

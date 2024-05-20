@@ -37,7 +37,6 @@ class TestUser(unittest.TestCase):
         self.assertEqual(str, type(obj.id))
         self.assertEqual(datetime, type(obj.created_at))
         self.assertEqual(datetime, type(obj.updated_at))
-        
 
     def test_string_representation(self):
         obj = User()
