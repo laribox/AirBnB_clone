@@ -20,6 +20,36 @@ class TestHBNBCommand(unittest.TestCase):
     def test_EOF_exits(self):
         self.assertTrue(HBNBCommand().onecmd("EOF"))
 
+    def test_create_object(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create BaseModel")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create User")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create State")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create City")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create Amenity")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create Place")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create Review")
+            Key = f"BaseModel.{output.getvalue().strip()}"
+            self.assertIn(Key, storage.all().keys())
+
 
 if __name__ == "__main__":
     unittest.main()
