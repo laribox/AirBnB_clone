@@ -103,7 +103,10 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
-        """Create a new class object and save it"""
+        """
+        Create a new instance of a class.
+        Usage: create <class_name>
+        """
         if len(line) == 0:
             print("** class name missing **")
         elif line in self.__classes:
