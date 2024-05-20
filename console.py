@@ -98,6 +98,10 @@ class HBNBCommand(cmd.Cmd):
         "Exits console"
         return True
 
+    def emptyline(self, line):
+        """Do nothing"""
+        pass
+
     def do_create(self, line):
         """Create a new class object and save it"""
         if len(line) == 0:
