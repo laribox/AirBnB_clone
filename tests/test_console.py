@@ -111,8 +111,11 @@ class TestHBNBCommand(unittest.TestCase):
         for item in self.__list:
             with patch('sys.stdout', new=StringIO()) as output:
                 HBNBCommand().onecmd("create " + item)
-                uid = output.getvalue().strip()
                 HBNBCommand().onecmd("all " + item)
+                self.assertIn(item, output.getvalue().strip())
+        for item in self.__list:
+            with patch('sys.stdout', new=StringIO()) as output: 
+                HBNBCommand().onecmd(item + ".all()")
                 self.assertIn(item, output.getvalue().strip())
 
     def test_update(self):
