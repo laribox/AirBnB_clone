@@ -95,6 +95,15 @@ class TestHBNBCommand(unittest.TestCase):
                 HBNBCommand().onecmd("show " + item + " " + uid)
                 self.assertTrue(len(output.getvalue().strip()) > 0)
 
+    def test_destroy(self):
+        for item in self.__list:
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd("create " + item)
+                uid = output.getvalue().strip()
+                HBNBCommand().onecmd("destroy " + item + " " + uid)
+                key = item + "." + uid
+                self.assertNotIn(key, storage.all().keys())
+
 
 if __name__ == "__main__":
     unittest.main()
