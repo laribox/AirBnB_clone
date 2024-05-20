@@ -124,7 +124,7 @@ class TestHBNBCommand(unittest.TestCase):
                 HBNBCommand().onecmd("all " + item)
                 self.assertIn(item, output.getvalue().strip())
         for item in self.__list:
-            with patch('sys.stdout', new=StringIO()) as output: 
+            with patch('sys.stdout', new=StringIO()) as output:
                 HBNBCommand().onecmd(item + ".all()")
                 self.assertIn(item, output.getvalue().strip())
 
@@ -138,17 +138,22 @@ class TestHBNBCommand(unittest.TestCase):
                 self.assertTrue(len(output.getvalue().strip()) > 0)
                 key = item + "." + uid
                 self.assertEqual(storage.all()[key].name, "Bob")
+            with patch('sys.stdout', new=StringIO()) as output:
+                HBNBCommand().onecmd(
+                    item + "update({}, 'name', 'Monalisa')".format(uid))
+                key = item + "." + uid
+                self.assertEqual(storage.all()[key].name, "Monalisa")
 
     def test_count(self):
         for item in self.__list:
             with patch('sys.stdout', new=StringIO()) as output:
                 HBNBCommand().onecmd(item + ".count()")
-                count = output.getvalue().strip()
-                objects =[]
+                count = output.getvaliue().strip()
+                objects = []
                 for obj in storage.all().values():
                     if obj.__class__.__name__ == item:
                         objects.append(obj)
-    
+
             self.assertEqual(int(count), len(objects))
 
 
