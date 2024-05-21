@@ -120,6 +120,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, line):
         """
         Print the count of the objects stored in JSON file
+        Usage: count <class_name> or <class>.count()
         """
         args = parse(line)
         objects = storage.all()
@@ -139,6 +140,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Shows an instance of a class using the
         class name and id
+        Usage: show <class_name> <id> or
+        <class_name>.show(<id>)
         """
 
         args = parse(line)
@@ -159,6 +162,8 @@ class HBNBCommand(cmd.Cmd):
         """
         Destroy a class instance using
         the class name and id
+        Usage: destroy <class_name> <id> or
+        <class_name>.destroy(<id>)
         """
         args = parse(line)
         objects = storage.all()
@@ -179,6 +184,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints a list of strings of all
         class instances
+        Usage: all <class_name> or all
         """
         args = parse(line)
         objects = storage.all()
@@ -198,6 +204,9 @@ class HBNBCommand(cmd.Cmd):
         """
         update a class instance using
         the class name and id
+        Usage: update <class_name> <id> <attribute>
+        <value> or <class_name>.update(<id>, attriute,
+        value)
         """
         args = parse(line)
         objects = storage.all()
