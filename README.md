@@ -88,6 +88,24 @@ By the end of this project, you should be able to explain:
 - All functions (inside and outside a class) should have documentation (`python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'`)
 - Collaborate on test cases to ensure no edge cases are missed.
 
+## How to Use the Program
+
+### Starting the Command Interpreter
+To start the command interpreter, run the following command in your terminal:
+
+./console.py
+### Basic Commands
+
+The command interpreter supports the following commands:
+
+- create <class_name>: Creates a new instance of the specified class and prints its ID.
+-   show <class_name> <id>: Prints the string representation of an instance based on the class name and ID.
+-   destroy <class_name> <id>: Deletes an instance based on the class name and ID.
+-   all [<class_name>]: Prints all string representations of instances optionally filtered by class name.
+-   update <class_name> <id> <attribute_name> <attribute_value>: Updates an instance based on the class name and ID by adding or updating an attribute.
+
+ 
+
 ## Contributing
 Contributions to this project are welcome. Please follow the guidelines outlined in this document and ensure all code is well-documented and tested.
 
