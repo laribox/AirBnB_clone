@@ -7,7 +7,7 @@ div.container section.filters {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  postion:relative;
+  position: relative;
 }
 
 section.filters button {
@@ -28,15 +28,11 @@ section.filters button:hover {
 .amenities {
     height: 100%;
     width: 25%;
-}
-
-.amenities {
-    margin-left: auto;
+   margin-left: auto;
 }
 
 .locations {
-    border-right: 1px solid #DDDDDD;
-    margin-left: auto;
+    border-right: 1px solid #DDDDDD;   
 }
 
 h3 {
