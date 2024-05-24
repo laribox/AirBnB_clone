@@ -27,9 +27,11 @@ section.filters div.locations {
   height: 100%;
   width: 25%;
   border-right: 1px solid #dddddd;
+  font-weight: 600;
 }
 
 section.filters div.amenities {
   height: 100%;
   width: 25%;
+  font-weight: 600;
 }
