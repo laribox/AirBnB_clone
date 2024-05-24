@@ -23,3 +23,13 @@ section.filters button {
 section.filters button:hover {
   opacity: 90%;
 }
+section.filters div.locations {
+  height: 100%;
+  width: 25%;
+  border-right: 1px solid #dddddd;
+}
+
+section.filters div.amenities {
+  height: 100%;
+  width: 25%;
+}
