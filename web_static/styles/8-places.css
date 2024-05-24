@@ -83,3 +83,9 @@ div.price_by_night {
   align-content: end;
   text-align: center;
 }
+.user {
+  margin-top: 20px;
+}
+.description {
+  margin-bottom: 60px;
+}
