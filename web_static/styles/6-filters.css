@@ -71,6 +71,7 @@ button:hover {
   opacity: 90%;
 }
 .popover {
+   width: 25%;
   list-style-type: none;
   display: none;
   background-color: #fafafa;
