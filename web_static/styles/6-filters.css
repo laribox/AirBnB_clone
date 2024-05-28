@@ -24,11 +24,11 @@ section.filters button:hover {
   opacity: 90%;
 }
 .locations,
-.amenities {
+section.amenities {
   height: 100%;
   width: 25%;
 }
-.amenities {
+section.amenities {
   margin-right: 270px;
 }
 
@@ -36,11 +36,11 @@ section.filters button:hover {
   border-right: 1px solid #dddddd;
 }
 .locations h3,
-.amenities h3 {
+section.amenities h3 {
   margin-left: 50px;
 }
 .locations h4,
-.amenities h4 {
+section.amenities h4 {
   margin-left: 50px;
 }
 
