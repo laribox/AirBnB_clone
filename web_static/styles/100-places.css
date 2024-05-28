@@ -89,3 +89,33 @@ div.price_by_night {
 .description {
   margin-bottom: 60px;
 }
+
+article .amenities,
+article .reviews {
+  margin-top: 40px;
+}
+
+article div.amenities h2,
+article div.reviews h2 {
+  position: relative;
+  left: -120px;
+  width: 380px;
+  font-size: 16px;
+  margin-top: 0;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 10px;
+}
+
+article div.reviews ul li h3 {
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+article div.reviews ul li p {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+article ul li {
+  list-style-type: none;
+}
